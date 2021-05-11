@@ -6,14 +6,24 @@
     android:orientation="vertical"
     tools:context=".ui.lapor.LaporFragment">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="50dp"
+        android:text="CANCEL"
+        android:id="@+id/fragmentlapor_clearphoto"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"/>
+
     <ImageView
         android:layout_width="350dp"
         android:layout_height="250dp"
         android:src="@drawable/ic_camera"
         android:layout_marginHorizontal="20dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginVertical="50dp"
-        android:id="@+id/fragmentlapor_camera"/>
+        android:layout_marginBottom="50dp"
+        android:id="@+id/fragmentlapor_photoresult"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -27,15 +37,15 @@
         android:orientation="horizontal">
         <Button
             android:layout_width="150dp"
-            android:id="@+id/fragmentlapor_btn_imgfromgallery"
-            android:text="AMBIL DARI GALERI"
+            android:id="@+id/fragmentlapor_btn_fromgallery"
+            android:text="@string/took_from_gallery"
             android:layout_gravity="center_vertical"
             android:layout_marginHorizontal="20dp"
             android:layout_height="wrap_content"/>
         <Button
             android:layout_width="150dp"
-            android:id="@+id/fragmentlapor_btn_tookphoto"
-            android:text="AMBIL FOTO"
+            android:id="@+id/fragmentlapor_btn_fromcamera"
+            android:text="@string/took_from_camera"
             android:layout_gravity="center_vertical"
             android:layout_marginHorizontal="20dp"
             android:layout_height="wrap_content"/>

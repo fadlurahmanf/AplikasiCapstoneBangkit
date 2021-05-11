@@ -9,12 +9,12 @@
     <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard" />
+        android:title="@string/title_activity" />
 
     <item
         android:id="@+id/navigation_lapor"
         android:icon="@drawable/ic_camera"
-        android:title="Lapor"/>
+        android:title="@string/title_lapor"/>
 
     <item
         android:id="@+id/navigation_notifications"
