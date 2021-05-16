@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_primary"
+    tools:context=".ui.register.RegisterActivity">
+
+    <ImageView
+        android:layout_width="200dp"
+        android:src="@color/color_primary_darker"
+        android:id="@+id/registeractivity_logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginVertical="50dp"
+        android:layout_height="200dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:id="@+id/registeractivity_fullname"
+        app:layout_constraintTop_toBottomOf="@id/registeractivity_logo"
+        android:layout_marginHorizontal="50dp"
+        android:background="@drawable/custom_input"
+        android:drawableStart="@drawable/ic_person_white"
+        android:hint="Full Name"
+        style="@style/edit_text_input"
+        android:layout_marginVertical="20dp"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:id="@+id/registeractivity_email"
+        app:layout_constraintTop_toBottomOf="@id/registeractivity_fullname"
+        android:layout_marginVertical="20dp"
+        android:drawableStart="@drawable/ic_email_white"
+        android:hint="Email"
+        android:background="@drawable/custom_input"
+        style="@style/edit_text_input"
+        android:layout_marginHorizontal="50dp"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:id="@+id/registeractivity_phonenumber"
+        app:layout_constraintTop_toBottomOf="@id/registeractivity_email"
+        android:layout_marginVertical="20dp"
+        android:inputType="number"
+        android:drawableStart="@drawable/ic_phone_white"
+        android:hint="Phone Number"
+        android:background="@drawable/custom_input"
+        style="@style/edit_text_input"
+        android:layout_marginHorizontal="50dp"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:id="@+id/registeractivity_password"
+        app:layout_constraintTop_toBottomOf="@id/registeractivity_phonenumber"
+        android:layout_marginVertical="20dp"
+        android:drawableStart="@drawable/ic_lock_white"
+        android:hint="Password"
+        android:background="@drawable/custom_input"
+        style="@style/edit_text_input"
+        android:inputType="textPassword"
+        android:layout_marginHorizontal="50dp"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:id="@+id/registeractivity_confirmpassword"
+        app:layout_constraintTop_toBottomOf="@id/registeractivity_password"
+        android:layout_marginVertical="20dp"
+        android:drawableStart="@drawable/ic_lock_white"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:background="@drawable/custom_input"
+        style="@style/edit_text_input"
+        android:layout_marginHorizontal="50dp"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/registeractivity_register"
+        app:layout_constraintTop_toBottomOf="@id/registeractivity_confirmpassword"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginVertical="50dp"
+        android:text="REGISTER"
+        android:paddingHorizontal="50dp"
+        android:letterSpacing="0.1"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_side_box"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/registeractivity_register"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginVertical="20dp"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Already have an account ?"
+            android:textStyle="italic"
+            android:textColor="@color/white"
+            android:letterSpacing="0.1"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Sign In"
+            android:id="@+id/registeractivity_btn_signIn"
+            android:layout_marginHorizontal="5dp"
+            android:textStyle="bold"
+            android:letterSpacing="0.1"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

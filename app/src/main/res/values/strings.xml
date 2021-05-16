@@ -12,4 +12,5 @@
     <string name="title_activity">Activity</string>
     <string name="took_from_gallery">TOOK FROM GALLERY</string>
     <string name="took_from_camera">TOOK FROM CAMERA</string>
+    <string name="submit">SUBMIT</string>
 </resources>

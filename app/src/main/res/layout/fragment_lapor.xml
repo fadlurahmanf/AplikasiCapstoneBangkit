@@ -1,16 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    app:layout_constraintStart_toStartOf="parent"
+    android:paddingVertical="50dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.lapor.LaporFragment">
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_gravity="end"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:id="@+id/fragmentlapor_txt_currentlocation"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="Searching your location..."
+        android:layout_height="wrap_content"/>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:id="@+id/fragmentlapor_progressbar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_marginRight="40dp"
         android:layout_marginTop="50dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/fragmentlapor_txt_currentlocation"
         android:text="CANCEL"
         android:id="@+id/fragmentlapor_clearphoto"
         android:textStyle="bold"
@@ -21,19 +43,55 @@
         android:layout_height="250dp"
         android:src="@drawable/ic_camera"
         android:layout_marginHorizontal="20dp"
-        android:layout_gravity="center_horizontal"
+
+        app:layout_constraintTop_toBottomOf="@id/fragmentlapor_clearphoto"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginBottom="50dp"
         android:id="@+id/fragmentlapor_photoresult"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:id="@+id/textcoba"
-        android:layout_height="wrap_content"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="300dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/fragmentlapor_containerspecial"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="200dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:gravity="center_horizontal"
+            android:layout_marginVertical="20dp"
+            android:id="@+id/fragmentlapor_txtspecial"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/fragmentlapor_txtspecial"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:id="@+id/fragmentlapor_btnspecial"
+            android:text="REFRESH"
+            android:textColor="@color/white"
+            android:layout_marginVertical="20dp"
+            android:background="@android:color/white"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_height="wrap_content"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/fragmentlapor_photoresult"
+        android:id="@+id/fragmentlapor_linearlayout"
         android:gravity="center_horizontal"
+        android:layout_marginVertical="50dp"
         android:orientation="horizontal">
         <Button
             android:layout_width="150dp"
@@ -41,15 +99,28 @@
             android:text="@string/took_from_gallery"
             android:layout_gravity="center_vertical"
             android:layout_marginHorizontal="20dp"
+            android:background="@drawable/rounded_side_box"
             android:layout_height="wrap_content"/>
         <Button
             android:layout_width="150dp"
             android:id="@+id/fragmentlapor_btn_fromcamera"
             android:text="@string/took_from_camera"
             android:layout_gravity="center_vertical"
+            android:background="@drawable/rounded_side_box"
             android:layout_marginHorizontal="20dp"
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
-</LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/fragmentlapor_submitreport"
+        app:layout_constraintTop_toBottomOf="@id/fragmentlapor_linearlayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="30dp"
+        android:text="@string/submit"
+        android:background="@drawable/rounded_side_box"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
