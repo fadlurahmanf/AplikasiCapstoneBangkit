@@ -30,7 +30,7 @@ class DetailLaporActivity : AppCompatActivity() {
         }else if (request == "CAMERA"){
             imageView.setImageBitmap(image as Bitmap)
         }else{
-            //KALAU BUKAN KEDUANYA
+            //KALAU BUKAN KEDUANYA TULIS NGAPAIN
         }
     }
 }
