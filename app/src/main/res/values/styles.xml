@@ -14,4 +14,8 @@
     <style name="rounded_box">
         <item name="cornerSize">10%</item>
     </style>
+
+    <style name="circle">
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>
