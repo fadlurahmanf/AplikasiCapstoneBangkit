@@ -1,17 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.home.HomeFragment">
+
+    <TextView
+        android:layout_width="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/fragmenthome_title_listpenanggulanganbencana"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:text="PERTOLONGAN PERTAMA BENCANA ALAM"
+        style="@style/text_title"
+        android:layout_height="wrap_content"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="wrap_content"
-        android:layout_marginVertical="20dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/fragmenthome_title_listpenanggulanganbencana"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:id="@+id/fragmenthome_recycleviewlayout_penanggulanganbencana"
         tools:listitem="@layout/item_penanggulangan_bencana"
-        android:layout_height="match_parent"/>
+        android:layout_height="200dp"/>
 
-</LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="TENTANG ANCANA"
+        style="@style/text_title"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragmenthome_recycleviewlayout_penanggulanganbencana"
+        android:layout_height="wrap_content"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
