@@ -1,2 +1,3 @@
 kosong
 
+ini 1
