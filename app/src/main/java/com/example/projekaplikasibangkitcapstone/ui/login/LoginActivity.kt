@@ -35,16 +35,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.loginactivity_btn_login->{
-                var authenticationService = AuthenticationService()
-                var result = authenticationService.SignIn(email.text.toString(), password.text.toString())
-                result.addOnCompleteListener {
-                    if (it.isSuccessful){
-                        val intent = Intent(this, HomePageActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }else{
-                        var exception = it.exception as FirebaseAuthException
-                        println(exception.errorCode)
+                if (isAllEditTextIsNotEmpty()){
+                    var authenticationService = AuthenticationService()
+                    var result = authenticationService.SignIn(email.text.toString(), password.text.toString())
+                    result.addOnCompleteListener {
+                        if (it.isSuccessful){
+                            val intent = Intent(this, HomePageActivity::class.java)
+                            startActivity(intent)
+                            finish()
+                        }else{
+                            var exception = it.exception as FirebaseAuthException
+                            println(exception.errorCode)
+                        }
                     }
                 }
             }
@@ -53,5 +55,21 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
         }
+    }
+
+    private fun isAllEditTextIsNotEmpty(): Boolean {
+        var booleanIsAllEditTextIsNotEmpty = false
+        if (email.text.trim().isNotEmpty() && password.text.trim().isNotEmpty()){
+            booleanIsAllEditTextIsNotEmpty = true
+        }else if (email.text.trim().isNullOrEmpty()){
+            email.error = "SILAHKAN ISI EMAIL"
+            booleanIsAllEditTextIsNotEmpty = false
+        }else if (password.text.trim().isNullOrEmpty()){
+            password.error = "SILAHKAN ISI PASSWORD"
+            booleanIsAllEditTextIsNotEmpty = false
+        }else{
+            booleanIsAllEditTextIsNotEmpty = false
+        }
+        return booleanIsAllEditTextIsNotEmpty
     }
 }

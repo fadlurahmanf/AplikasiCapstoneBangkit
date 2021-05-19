@@ -1,5 +1,8 @@
 package com.example.projekaplikasibangkitcapstone.ui.home
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +22,7 @@ class HomeFragment : Fragment() {
 
     //ID LAYOUT
     private lateinit var layoutPenanggulanganBencana:RecyclerView
+    private lateinit var aboutAncana:TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +43,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         if (activity!=null){
             layoutPenanggulanganBencana = view.findViewById(R.id.fragmenthome_recycleviewlayout_penanggulanganbencana)
+            aboutAncana = view.findViewById(R.id.fragmenthome_title_aboutAncana)
 
             val viewModel =ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[HomeViewModel::class.java]
             val dataPenanggulanganBencana = viewModel.getDataPenanggulanganBencana()
@@ -46,6 +51,9 @@ class HomeFragment : Fragment() {
             adapter.getDataPenanggulanganBencana(dataPenanggulanganBencana)
             layoutPenanggulanganBencana.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
             layoutPenanggulanganBencana.adapter = adapter
+
+            aboutAncana.setOnClickListener {
+            }
         }
     }
 }

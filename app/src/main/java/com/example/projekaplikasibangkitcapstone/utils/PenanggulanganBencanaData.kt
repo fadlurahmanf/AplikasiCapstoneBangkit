@@ -5,16 +5,18 @@ import com.example.projekaplikasibangkitcapstone.model.PenanggulanganBencanaMode
 
 object PenanggulanganBencanaData {
     private val namaBencana = arrayOf(
-        "Gempa Bumi",
-        "Banjir",
-        "Kebakaran",
-        "Tanah Longsor"
+            "Gempa Bumi",
+            "Banjir",
+            "Kebakaran",
+            "Tanah Longsor",
+            "Angin Topan"
     )
     private val fotoBencana = intArrayOf(
-        R.drawable.earhquake,
-        R.drawable.flood,
-        R.drawable.wildfire,
-        R.drawable.landslide
+            R.drawable.earhquake,
+            R.drawable.flood,
+            R.drawable.wildfire,
+            R.drawable.landslide,
+            R.drawable.hurricane
     )
     val listData:ArrayList<PenanggulanganBencanaModel>
     get() {
