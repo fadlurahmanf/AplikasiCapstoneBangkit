@@ -6,9 +6,10 @@
     tools:context=".ui.profile.ProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <Button
+        android:layout_width="wrap_content"
+        android:text="coba"
+        android:id="@+id/coba"
+        android:layout_height="wrap_content"/>
 
 </FrameLayout>

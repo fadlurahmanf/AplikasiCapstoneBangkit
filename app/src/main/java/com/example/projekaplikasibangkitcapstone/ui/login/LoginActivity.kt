@@ -39,21 +39,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 var result = authenticationService.SignIn(email.text.toString(), password.text.toString())
                 result.addOnCompleteListener {
                     if (it.isSuccessful){
-                        println("berhasil")
-                        println(it.result.credential)
+                        val intent = Intent(this, HomePageActivity::class.java)
+                        startActivity(intent)
+                        finish()
                     }else{
                         var exception = it.exception as FirebaseAuthException
                         println(exception.errorCode)
                     }
                 }
-//                authenticationService.SignOut()
             }
             R.id.loginactivity_btn_regis->{
-//                val intent = Intent(this, RegisterActivity::class.java)
-//                startActivity(intent)
-                var authenticationService = AuthenticationService()
-                var result = authenticationService.checkUserIsSignIn()
-                println(result?.email)
+                val intent = Intent(this, RegisterActivity::class.java)
+                startActivity(intent)
             }
         }
     }

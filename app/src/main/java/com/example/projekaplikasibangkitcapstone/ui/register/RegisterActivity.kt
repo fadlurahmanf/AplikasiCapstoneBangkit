@@ -77,6 +77,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                                 dataHelper.insert(values)
                                 println("BERHASL INSERT")
                             }
+                            clearAllEditText()
                             Toast.makeText(this, "BERHASIL REGISTRASI", Toast.LENGTH_LONG).show()
                         }.addOnFailureListener {
                             println("gagal")
@@ -93,6 +94,15 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
+
+    private fun clearAllEditText() {
+        full_name.setText("")
+        email.setText("")
+        phoneNumber.setText("")
+        password.setText("")
+        conf_password.setText("")
+    }
+
     private fun isAllTextFieldIsNotEmpty():Boolean{
         if (full_name.text.trim().isNotEmpty() && email.text.isNotEmpty() && phoneNumber.text.isNotEmpty()
                 && password.text.isNotEmpty() && conf_password.text.isNotEmpty()){
