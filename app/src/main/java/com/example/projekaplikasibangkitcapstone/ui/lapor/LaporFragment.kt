@@ -10,7 +10,9 @@ import android.graphics.BitmapFactory
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.net.ConnectivityManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.provider.MediaStore
@@ -70,43 +72,38 @@ class LaporFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btn_fromCamera = view.findViewById(R.id.fragmentlapor_btn_fromcamera)
-        photoResult = view.findViewById(R.id.fragmentlapor_photoresult)
-        btn_clearPhoto = view.findViewById(R.id.fragmentlapor_clearphoto)
-        btn_fromGallery = view.findViewById(R.id.fragmentlapor_btn_fromgallery)
-        txt_currentLocation = view.findViewById(R.id.fragmentlapor_txt_currentlocation)
-        layout_special = view.findViewById(R.id.fragmentlapor_containerspecial)
-        btn_special = view.findViewById(R.id.fragmentlapor_btnspecial)
-        progressBar = view.findViewById(R.id.fragmentlapor_progressbar)
-        txt_special = view.findViewById(R.id.fragmentlapor_txtspecial)
-        btn_submitreport = view.findViewById(R.id.fragmentlapor_submitreport)
+        initializationIdLayout(view)
 
-        btn_fromCamera.setOnClickListener(this)
-        btn_clearPhoto.setOnClickListener(this)
-        btn_fromGallery.setOnClickListener(this)
-        btn_special.setOnClickListener(this)
-        btn_submitreport.setOnClickListener(this)
         btn_clearPhoto.visibility = View.INVISIBLE
 
-        txt_currentLocation.setOnClickListener(this)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.context)
 
         if (checkLocationPermission()){
-            if (isLocationEnabled()){
-                //LOCATION PERMISSION TRUE & LOCATION IS TRUE
-                layout_special.visibility = View.INVISIBLE
-                fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.context)
-                println("BENER")
-                getLocation()
-            } else{
-                //LOCATION PERMISSION TRUE & LOCATION IS NOT TRUE
+            if (isNetworkEnable()){
+                if (isLocationEnabled()){
+                    //LOCATION PERMISSION TRUE & LOCATION IS TRUE
+                    layout_special.visibility = View.INVISIBLE
+                    fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.context)
+                    println("BENER")
+                    getLocation()
+                } else{
+                    //LOCATION PERMISSION TRUE & LOCATION IS NOT TRUE
+                    txt_currentLocation.visibility = View.INVISIBLE
+                    photoResult.visibility = View.INVISIBLE
+                    btn_fromCamera.visibility = View.INVISIBLE
+                    btn_fromGallery.visibility = View.INVISIBLE
+                    progressBar.visibility = View.INVISIBLE
+                    btn_submitreport.visibility = View.INVISIBLE
+                    txt_special.text = "PLEASE TURN ON YOUR LOCATION AND CLICK REFRESH"
+                }
+            }else{
                 txt_currentLocation.visibility = View.INVISIBLE
                 photoResult.visibility = View.INVISIBLE
                 btn_fromCamera.visibility = View.INVISIBLE
                 btn_fromGallery.visibility = View.INVISIBLE
                 progressBar.visibility = View.INVISIBLE
                 btn_submitreport.visibility = View.INVISIBLE
-                txt_special.text = "PLEASE TURN ON YOUR LOCATION AND CLICK REFRESH"
+                txt_special.text = "PLEASE TURN ON YOUR INTERNET AND CLICK REFRESH"
             }
         }else{
             //LOCATION PERMISSION IS DENY
@@ -261,6 +258,40 @@ class LaporFragment : Fragment(), View.OnClickListener {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, REQUEST_PICK_FROM_GALLERY)
+    }
+
+    private fun isNetworkEnable():Boolean{
+        var booleanIsNetworkEnabled = false
+        val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (connectivityManager.activeNetwork.toString() == "null"){
+                booleanIsNetworkEnabled = false
+            }else{
+                booleanIsNetworkEnabled = true
+            }
+        }else{
+            booleanIsNetworkEnabled = false
+        }
+        return booleanIsNetworkEnabled
+    }
+
+    private fun initializationIdLayout(view:View){
+        btn_fromCamera = view.findViewById(R.id.fragmentlapor_btn_fromcamera)
+        photoResult = view.findViewById(R.id.fragmentlapor_photoresult)
+        btn_clearPhoto = view.findViewById(R.id.fragmentlapor_clearphoto)
+        btn_fromGallery = view.findViewById(R.id.fragmentlapor_btn_fromgallery)
+        txt_currentLocation = view.findViewById(R.id.fragmentlapor_txt_currentlocation)
+        layout_special = view.findViewById(R.id.fragmentlapor_containerspecial)
+        btn_special = view.findViewById(R.id.fragmentlapor_btnspecial)
+        progressBar = view.findViewById(R.id.fragmentlapor_progressbar)
+        txt_special = view.findViewById(R.id.fragmentlapor_txtspecial)
+        btn_submitreport = view.findViewById(R.id.fragmentlapor_submitreport)
+        btn_fromCamera.setOnClickListener(this)
+        btn_clearPhoto.setOnClickListener(this)
+        btn_fromGallery.setOnClickListener(this)
+        btn_special.setOnClickListener(this)
+        btn_submitreport.setOnClickListener(this)
+        txt_currentLocation.setOnClickListener(this)
     }
 
 }
