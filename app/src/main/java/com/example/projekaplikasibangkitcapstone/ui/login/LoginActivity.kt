@@ -39,6 +39,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                     var authenticationService = AuthenticationService()
                     var result = authenticationService.SignIn(email.text.toString(), password.text.toString())
                     result.addOnCompleteListener {
+                        println("halo")
                         if (it.isSuccessful){
                             val intent = Intent(this, HomePageActivity::class.java)
                             startActivity(intent)

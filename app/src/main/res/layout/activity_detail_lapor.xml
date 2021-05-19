@@ -58,14 +58,14 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="NAMA BENCANA" />
+            android:text="JENIS BENCANA" />
 
         <TextView
             android:layout_width="match_parent"
             android:id="@+id/activity_detail_lapor_disasterType"
             android:gravity="center"
             android:paddingHorizontal="50dp"
-            android:text="TIPE BENCANA"
+            android:text="JENIS BENCANA"
             android:textColor="@color/black"
             android:background="@drawable/box_all_around_corner"
             android:layout_height="wrap_content"/>
