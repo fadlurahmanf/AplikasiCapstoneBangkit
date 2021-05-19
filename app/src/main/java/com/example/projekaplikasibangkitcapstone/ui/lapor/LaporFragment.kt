@@ -39,6 +39,7 @@ class LaporFragment : Fragment(), View.OnClickListener {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var imageURI:Any
+    lateinit var namaKota:String
 
     //ID VIEW IN LAYOUT
     private lateinit var btn_fromCamera:Button
@@ -153,6 +154,7 @@ class LaporFragment : Fragment(), View.OnClickListener {
                 progressBar.visibility = View.INVISIBLE
                 var geocoder = Geocoder(this.requireView().context, Locale.getDefault())
                 var adress = geocoder.getFromLocation(it.latitude, it.longitude, 1)
+                namaKota = adress.get(0).subAdminArea.toString()
                 txt_currentLocation.text = adress.get(0).subAdminArea.toString()
             }else{
                 txt_currentLocation.visibility = View.INVISIBLE
@@ -238,6 +240,7 @@ class LaporFragment : Fragment(), View.OnClickListener {
                 if (REQUEST_CODE!=0){
                     var image = imageURI
                     var intent = Intent(this.activity, DetailLaporActivity::class.java)
+                    intent.putExtra(DetailLaporActivity.KOTA, namaKota)
                     if (REQUEST_CODE==REQUEST_PICK_FROM_GALLERY){
                         image = imageURI as Uri
                         intent.putExtra(DetailLaporActivity.IMAGE_RESULT, image)
