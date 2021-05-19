@@ -42,6 +42,7 @@ class DataHelper(context: Context) {
         return database.rawQuery("SELECT * FROM $TABLE_NAME", null)
     }
     fun insert(values:ContentValues?):Long{
+        dataBaseHelper.writableDatabase
         return database.insert(
                 DATABASE_TABLE,
                 null,
@@ -49,6 +50,7 @@ class DataHelper(context: Context) {
         )
     }
     fun deleteByEmail(email: String):Int{
+        dataBaseHelper.writableDatabase
         return database.delete(DATABASE_TABLE, "$COL_EMAIL = '$email'", null)
     }
 

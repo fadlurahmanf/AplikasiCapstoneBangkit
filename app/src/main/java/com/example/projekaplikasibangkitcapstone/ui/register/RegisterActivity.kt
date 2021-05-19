@@ -8,13 +8,18 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import com.example.projekaplikasibangkitcapstone.R
 import com.example.projekaplikasibangkitcapstone.ui.login.LoginActivity
+import com.example.projekaplikasibangkitcapstone.utils.authentication.AuthenticationService
 import com.example.projekaplikasibangkitcapstone.utils.database.DataHelper
 import com.example.projekaplikasibangkitcapstone.utils.database.DatabaseContract.UserColumns.Companion.COL_EMAIL
 import com.example.projekaplikasibangkitcapstone.utils.database.DatabaseContract.UserColumns.Companion.COL_FULL_NAME
 import com.example.projekaplikasibangkitcapstone.utils.database.DatabaseContract.UserColumns.Companion.COL_PASSWORD
 import com.example.projekaplikasibangkitcapstone.utils.database.DatabaseContract.UserColumns.Companion.COL_PHONE_NUMBER
+import com.google.firebase.auth.FirebaseAuthException
+import kotlinx.coroutines.*
+import kotlin.system.measureTimeMillis
 
 class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var btn_signIn:TextView
@@ -34,13 +39,13 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         email = findViewById(R.id.registeractivity_email)
         phoneNumber = findViewById(R.id.registeractivity_phonenumber)
         password = findViewById(R.id.registeractivity_password)
+        conf_password = findViewById(R.id.registeractivity_confirmpassword)
 
         btn_signIn.setOnClickListener(this)
         btn_register.setOnClickListener(this)
 
         dataHelper = DataHelper.getInstance(applicationContext)
         dataHelper.open()
-
 
     }
 
@@ -50,23 +55,74 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                 onBackPressed()
             }
             R.id.registeractivity_btn_register->{
-                var resultGetDataByEmail = dataHelper.getDataByEmail(email.text.toString())
-                var values = ContentValues()
-                if (resultGetDataByEmail.count>0){
-                    values.put(COL_FULL_NAME, full_name.text.toString())
-                    values.put(COL_PHONE_NUMBER, phoneNumber.text.toString())
-                    values.put(COL_PASSWORD, password.text.toString())
-                    dataHelper.update(email.text.toString(), values)
-                    println("SEHARUSNYA BERHASIL UPDATE")
+                if (isAllTextFieldIsNotEmpty()){
+                    if (isPasswordAndConfPasswordIsMatch()){
+                        var resultGetDataByEmail = dataHelper.getDataByEmail(email.text.toString())
+                        var values = ContentValues()
+                        var authenticationService = AuthenticationService()
+                        var result = authenticationService.SignUp(email.text.toString(), password.text.toString())
+                        result.addOnSuccessListener {
+                            println("berhasil")
+                            if (resultGetDataByEmail.count>0){
+                                values.put(COL_FULL_NAME, full_name.text.toString())
+                                values.put(COL_PHONE_NUMBER, phoneNumber.text.toString())
+                                values.put(COL_PASSWORD, password.text.toString())
+                                dataHelper.update(email.text.toString(), values)
+                                println("BERHASIL UPDATE")
+                            }else{
+                                values.put(COL_EMAIL, email.text.toString())
+                                values.put(COL_FULL_NAME, full_name.text.toString())
+                                values.put(COL_PHONE_NUMBER, phoneNumber.text.toString())
+                                values.put(COL_PASSWORD, password.text.toString())
+                                dataHelper.insert(values)
+                                println("BERHASL INSERT")
+                            }
+                            Toast.makeText(this, "BERHASIL REGISTRASI", Toast.LENGTH_LONG).show()
+                        }.addOnFailureListener {
+                            println("gagal")
+                            var exception = it as FirebaseAuthException
+                            println(exception.errorCode)
+                            Toast.makeText(this, "${exception.errorCode}", Toast.LENGTH_LONG).show()
+                        }
+                    }else{
+                        println("PASSWORD DAN CONFIRM PASSWORD GA SESUAI")
+                    }
                 }else{
-                    values.put(COL_EMAIL, email.text.toString())
-                    values.put(COL_FULL_NAME, full_name.text.toString())
-                    values.put(COL_PHONE_NUMBER, phoneNumber.text.toString())
-                    values.put(COL_PASSWORD, password.text.toString())
-                    dataHelper.insert(values)
-                    println("SEHARUSNYA INSERT")
+                    println("ADA YANG BELOM KE ISI")
                 }
             }
+        }
+    }
+    private fun isAllTextFieldIsNotEmpty():Boolean{
+        if (full_name.text.trim().isNotEmpty() && email.text.isNotEmpty() && phoneNumber.text.isNotEmpty()
+                && password.text.isNotEmpty() && conf_password.text.isNotEmpty()){
+            return true
+        }else if (full_name.text.trim().isEmpty()){
+            full_name.error ="TIDAK BOLEH DIKOSONGKAN"
+            return false
+        }else if (email.text.trim().isEmpty()){
+            email.error ="TIDAK BOLEH DIKOSONGKAN"
+            return false
+        }else if (phoneNumber.text.trim().isEmpty()){
+            phoneNumber.error ="TIDAK BOLEH DIKOSONGKAN"
+            return false
+        }else if (password.text.trim().isEmpty()){
+            password.error ="TIDAK BOLEH DIKOSONGKAN"
+            return false
+        }else if (conf_password.text.trim().isEmpty()){
+            conf_password.error ="TIDAK BOLEH DIKOSONGKAN"
+            return false
+        }else{
+            return false
+        }
+    }
+    private fun isPasswordAndConfPasswordIsMatch():Boolean{
+        if (password.text.toString() == conf_password.text.toString()){
+            return true
+        }else{
+            password.error = "PASSWORD DAN CONFIRM PASSWORD HARUS SESUAI"
+            conf_password.error = "PASSWORD DAN CONFIRM PASSWORD HARUS SESUAI"
+            return false
         }
     }
 }

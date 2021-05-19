@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "47143204060",
+    "project_id": "aplikasicapstonebangkit",
+    "storage_bucket": "aplikasicapstonebangkit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:47143204060:android:a340c55f97d08a45707019",
+        "android_client_info": {
+          "package_name": "com.example.projekaplikasibangkitcapstone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "47143204060-f97jgb08633qoq9nc7d4ea6tl3ubkc1s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVpAhwL2T3_BRT00i516DJG88yXyagjg0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "47143204060-f97jgb08633qoq9nc7d4ea6tl3ubkc1s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
