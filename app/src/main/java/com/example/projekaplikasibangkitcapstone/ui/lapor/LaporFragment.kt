@@ -153,7 +153,7 @@ class LaporFragment : Fragment(), View.OnClickListener {
                 progressBar.visibility = View.INVISIBLE
                 var geocoder = Geocoder(this.requireView().context, Locale.getDefault())
                 var adress = geocoder.getFromLocation(it.latitude, it.longitude, 1)
-                txt_currentLocation.text = adress.get(0).locality.toString()
+                txt_currentLocation.text = adress.get(0).subAdminArea.toString()
             }else{
                 txt_currentLocation.visibility = View.INVISIBLE
                 progressBar.visibility = View.VISIBLE

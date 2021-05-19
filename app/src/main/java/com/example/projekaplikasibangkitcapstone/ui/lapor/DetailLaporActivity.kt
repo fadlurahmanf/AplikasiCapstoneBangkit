@@ -20,7 +20,7 @@ class DetailLaporActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_lapor)
         supportActionBar?.title = "DETAIL SUBMIT REPORT"
-        imageView = findViewById(R.id.imagedetaillapor)
+        imageView = findViewById(R.id.activity_detail_lapor_imageDisaster)
 
         var extras = intent.extras
         var request = extras?.get(IMAGE_REQUEST_TYPE)
