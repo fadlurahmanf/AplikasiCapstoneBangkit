@@ -54,7 +54,7 @@ class DataHelper(context: Context) {
         return database.delete(DATABASE_TABLE, "$COL_EMAIL = '$email'", null)
     }
 
-    fun queryById(email: String):Cursor{
+    fun queryByEmail(email: String):Cursor{
         return database.query(DATABASE_TABLE, null, "$COL_EMAIL=?", arrayOf(email.toString()), null, null, null, null)
     }
 
