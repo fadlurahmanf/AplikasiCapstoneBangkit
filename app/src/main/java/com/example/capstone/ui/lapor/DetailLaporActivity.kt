@@ -1,11 +1,13 @@
 package com.example.capstone.ui.lapor
 
+import android.R.attr.orientation
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
@@ -14,7 +16,9 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.exifinterface.media.ExifInterface
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils.rotateImage
 import com.example.capstone.R
 import com.example.capstone.SplashScreen
 import com.example.capstone.utils.ConvertImage
@@ -30,10 +34,9 @@ import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTabl
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_REPORT_BY_PHONE_NUMBER
 import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.PHONE_NUMBER
 import com.example.capstone.utils.firestore.FirestoreServices
-import java.io.File
 import java.io.IOException
-import java.util.*
-import kotlin.collections.HashMap
+import java.io.InputStream
+
 
 class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -48,6 +51,8 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var disasterCaseHelper: DisasterCaseHelper
     lateinit var emailUser:String
     lateinit var phoneNumberUser:String
+
+    lateinit var imagePath:String
 
     companion object{
         val IMAGE_REQUEST_TYPE = "IMAGE_REQUEST_TYPE"
@@ -158,21 +163,96 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
             R.id.activity_detail_lapor_btnSubmit->{
 //                insertDisasterCaseData()
 //                insertImageDisasterCaseToFirebaseStorage()
-
+                println(imageCase.width)
+                println(imageCase.height)
                 var imageUri = ConvertImage.getUriFromBitmap(imageCase, this)
-                imageView.setImageURI(imageUri)
+                var imageResult = handleBitmap(this, imageUri)
+                println(imageResult?.width)
+                println(imageResult?.height)
             }
         }
     }
 
-    fun getImage(imageInBitmap:Bitmap, imageAbsolutePath:String){
+    private fun handleBitmap(context: Context, imageUri: Uri): Bitmap? {
+        var imageBitmap: Bitmap? = null
         try {
-            var exifInterface = ExifInterface(imageAbsolutePath)
-            println(exifInterface.toString())
-            println("berhasil")
+            var MAX_WIDTH:Int = 1024
+            var MAX_HEIGTH:Int = 1024
+
+            var options = BitmapFactory.Options()
+            options.inJustDecodeBounds = true
+            var imageStream = context.contentResolver.openInputStream(imageUri)
+            BitmapFactory.decodeStream(imageStream, null, options)
+            imageStream?.close()
+
+            options.inSampleSize = calculateInSampleSize(options, MAX_WIDTH, MAX_HEIGTH)
+
+            options.inJustDecodeBounds = false
+            imageStream = context.contentResolver.openInputStream(imageUri)
+            var img: Bitmap? = BitmapFactory.decodeStream(imageStream, null, options)
+            img = rotateImageIfRequired(context, img, imageUri)
+            imageBitmap = img!!
         }catch (e:IOException){
-            println("GAGALLL")
-            println(e.message)
+            println("handle BITMAP GAGALLLLLLLLL")
+            println(e.message.toString())
+        }
+        return imageBitmap
+    }
+
+    lateinit var exifInterface: ExifInterface
+    private fun rotateImageIfRequired(context: Context, img: Bitmap?, imageUri: Uri): Bitmap? {
+        var input:InputStream? = context.contentResolver.openInputStream(imageUri)
+        var imageBitmap:Bitmap? = null
+        try {
+            exifInterface = ExifInterface(imageUri.path!!)
+            var rotation:Int = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+            return when (orientation) {
+                ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(img!!, 90)
+                ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(img!!, 180)
+                ExifInterface.ORIENTATION_ROTATE_270 -> rotateImage(img!!, 270)
+                else -> img
+            }
+        }catch (e:IOException){
+            println("rotate IMAGE GAGALLLLLLLLLLLLLLL")
         }
     }
+
+    private fun rotateImage(imageBitmap: Bitmap, degree:Int): Bitmap? {
+        var matrix:Matrix = Matrix()
+        matrix.postRotate(degree.toFloat()) //CHECK LATER
+        var rotatedImg = Bitmap.createBitmap(imageBitmap, 0, 0, imageBitmap.width, imageBitmap.height, matrix, true)
+        imageBitmap.recycle()
+        return rotatedImg
+
+    }
+
+    private fun calculateInSampleSize(options:BitmapFactory.Options, reqWidth:Int, reqHeight:Int): Int {
+        var height = options.outHeight
+        var width = options.outWidth
+        var inSampleSize = 1
+        if (height > reqHeight || width > reqWidth) {
+            var heightRatio = Math.round(height.toFloat() / reqHeight.toFloat())
+            var widthRatio = Math.round(width.toFloat() / reqWidth.toFloat())
+            inSampleSize = if (heightRatio < widthRatio) heightRatio else widthRatio
+            var totalPixels:Float = (width*height).toFloat()
+            var totalReqPixelsCap = reqWidth * reqHeight * 2
+            while (totalPixels / (inSampleSize * inSampleSize) > totalReqPixelsCap) {
+                inSampleSize++
+            }
+        }
+        return inSampleSize
+    }
+
+    fun getImage(imageUri:Uri){
+        try {
+            var uriFile = contentResolver.openInputStream(imageUri)
+            var exifInterface = ExifInterface(uriFile!!)
+            var rotation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED)
+
+        }catch (e:IOException){
+            println("GAGALLLLLLLLLLL")
+            println(e.message.toString())
+        }
+    }
+
 }
