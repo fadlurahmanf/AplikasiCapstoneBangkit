@@ -31,4 +31,8 @@ object ConvertImage {
         var path = MediaStore.Images.Media.insertImage(context.contentResolver, image, "Title", null)
         return path
     }
+    fun getBitmapFromUri(imageInUri: Uri, context: Context): Bitmap? {
+        var imageInBitmap = MediaStore.Images.Media.getBitmap(context.contentResolver, imageInUri)
+        return imageInBitmap
+    }
 }
