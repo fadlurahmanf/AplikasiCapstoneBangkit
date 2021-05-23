@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.projekaplikasibangkitcapstone">
+    package="com.example.capstone">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -14,18 +16,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjekAplikasiBangkitCapstone">
-        <activity android:name=".ui.lapor.DetailLaporActivity"></activity>
+        <activity android:name="com.example.capstone.ui.lapor.DetailLaporActivity"></activity>
         <activity
-            android:name=".ui.register.RegisterActivity"
+            android:name="com.example.capstone.ui.register.RegisterActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".ui.login.LoginActivity"
+            android:name="com.example.capstone.ui.login.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".HomePageActivity"
+            android:name="com.example.capstone.HomePageActivity"
             android:label="@string/title_activity_home_page" />
         <activity
-            android:name=".SplashScreen"
+            android:name="com.example.capstone.SplashScreen"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
