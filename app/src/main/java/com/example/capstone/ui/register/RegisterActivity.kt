@@ -9,13 +9,13 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.example.capstone.R
+import com.example.capstone.model.UserModel
 import com.example.capstone.utils.authentication.AuthenticationService
-import com.example.capstone.utils.database.UserHelper
-import com.example.capstone.utils.database.DatabaseContract.UserColumns.Companion.COL_EMAIL
-import com.example.capstone.utils.database.DatabaseContract.UserColumns.Companion.COL_FULL_NAME
-import com.example.capstone.utils.database.DatabaseContract.UserColumns.Companion.COL_PASSWORD
-import com.example.capstone.utils.database.DatabaseContract.UserColumns.Companion.COL_PHONE_NUMBER
-import com.google.firebase.auth.FirebaseAuthException
+import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.EMAIL_USER
+import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.FULL_NAME
+import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.PASSWORD_USER
+import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.PHONE_NUMBER
+import com.example.capstone.utils.firestore.FirestoreServices
 
 class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var btn_signIn:TextView
@@ -25,25 +25,11 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var phoneNumber:EditText
     private lateinit var password:EditText
     private lateinit var conf_password:EditText
-    private lateinit var userHelper: UserHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        btn_signIn = findViewById(R.id.registeractivity_btn_signIn)
-        btn_register = findViewById(R.id.registeractivity_btn_register)
-        full_name = findViewById(R.id.registeractivity_fullname)
-        email = findViewById(R.id.registeractivity_email)
-        phoneNumber = findViewById(R.id.registeractivity_phonenumber)
-        password = findViewById(R.id.registeractivity_password)
-        conf_password = findViewById(R.id.registeractivity_confirmpassword)
-
-        btn_signIn.setOnClickListener(this)
-        btn_register.setOnClickListener(this)
-
-        userHelper = UserHelper.getInstance(applicationContext)
-        userHelper.open()
-
+        initializationIdLayout()
     }
 
     override fun onClick(v: View?) {
@@ -52,43 +38,39 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                 onBackPressed()
             }
             R.id.registeractivity_btn_register->{
+
                 if (isAllTextFieldIsNotEmpty()){
                     if (isPasswordAndConfPasswordIsMatch()){
-                        var resultGetDataByEmail = userHelper.getDataByEmail(email.text.toString())
-                        var values = ContentValues()
-                        var authenticationService = AuthenticationService()
-                        var result = authenticationService.SignUp(email.text.toString(), password.text.toString())
-                        result.addOnSuccessListener {
-                            println("berhasil")
-                            if (resultGetDataByEmail.count>0){
-                                values.put(COL_FULL_NAME, full_name.text.toString())
-                                values.put(COL_PHONE_NUMBER, phoneNumber.text.toString())
-                                values.put(COL_PASSWORD, password.text.toString())
-                                userHelper.update(email.text.toString(), values)
-                                println("BERHASIL UPDATE")
-                            }else{
-                                values.put(COL_EMAIL, email.text.toString())
-                                values.put(COL_FULL_NAME, full_name.text.toString())
-                                values.put(COL_PHONE_NUMBER, phoneNumber.text.toString())
-                                values.put(COL_PASSWORD, password.text.toString())
-                                userHelper.insert(values)
-                                println("BERHASL INSERT")
-                            }
-                            clearAllEditText()
-                            Toast.makeText(this, "BERHASIL REGISTRASI", Toast.LENGTH_LONG).show()
-                        }.addOnFailureListener {
-                            println("gagal")
-                            var exception = it as FirebaseAuthException
-                            println(exception.errorCode)
-                            Toast.makeText(this, "${exception.errorCode}", Toast.LENGTH_LONG).show()
-                        }
-                    }else{
-                        println("PASSWORD DAN CONFIRM PASSWORD GA SESUAI")
+                        registerDataToFirestore()
                     }
-                }else{
-                    println("ADA YANG BELOM KE ISI")
                 }
             }
+        }
+    }
+
+    private fun registerDataToFirestore(){
+        val firestoreServices = FirestoreServices()
+        var user:MutableMap<String, Any> = HashMap()
+        user.put(FULL_NAME, full_name.text.toString())
+        user.put(EMAIL_USER, email.text.toString())
+        user.put(PHONE_NUMBER, phoneNumber.text.toString())
+        user.put(PASSWORD_USER, password.text.toString())
+
+        var insertQuery = firestoreServices.UserData().insertUserData(user)
+        insertQuery.addOnSuccessListener {
+            registerDataToFirebaseAuthentication()
+        }.addOnFailureListener {
+            Toast.makeText(this, "${it.message.toString()}", Toast.LENGTH_LONG).show()
+        }
+    }
+    private fun registerDataToFirebaseAuthentication(){
+        val authenticationService = AuthenticationService()
+        var insertQuery = authenticationService.SignUp(email.text.toString(), password.text.toString())
+        insertQuery.addOnSuccessListener {
+            Toast.makeText(this, "BERHASIL REGISTRASI", Toast.LENGTH_LONG).show()
+            clearAllEditText()
+        }.addOnFailureListener {
+            Toast.makeText(this, "${it.message.toString()}", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -99,7 +81,6 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         password.setText("")
         conf_password.setText("")
     }
-
     private fun isAllTextFieldIsNotEmpty():Boolean{
         if (full_name.text.trim().isNotEmpty() && email.text.isNotEmpty() && phoneNumber.text.isNotEmpty()
                 && password.text.isNotEmpty() && conf_password.text.isNotEmpty()){
@@ -131,5 +112,18 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
             conf_password.error = "PASSWORD DAN CONFIRM PASSWORD HARUS SESUAI"
             return false
         }
+    }
+
+    private fun initializationIdLayout(){
+        btn_signIn = findViewById(R.id.registeractivity_btn_signIn)
+        btn_register = findViewById(R.id.registeractivity_btn_register)
+        full_name = findViewById(R.id.registeractivity_fullname)
+        email = findViewById(R.id.registeractivity_email)
+        phoneNumber = findViewById(R.id.registeractivity_phonenumber)
+        password = findViewById(R.id.registeractivity_password)
+        conf_password = findViewById(R.id.registeractivity_confirmpassword)
+
+        btn_signIn.setOnClickListener(this)
+        btn_register.setOnClickListener(this)
     }
 }

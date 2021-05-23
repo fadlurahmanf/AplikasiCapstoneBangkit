@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.widget.ImageView
 import com.example.capstone.ui.login.LoginActivity
+import com.example.capstone.ui.register.RegisterActivity
 import com.example.capstone.utils.authentication.AuthenticationService
 
 class SplashScreen : AppCompatActivity() {

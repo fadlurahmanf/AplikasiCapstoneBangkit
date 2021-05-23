@@ -19,17 +19,17 @@ object DatabaseContract {
 
     internal class DisasterColumns:BaseColumns{
         companion object{
-            const val DISASTER_CASE_TABLE_NAME = "disasterdata"
-            const val COL_ID_DISASTER_CASE = "_id"
-            const val COL_DISASTER_IMAGE_CASE = "image"
-            const val COL_LOCATION = "location"
-            const val COL_DISASTER_TYPE = "type"
-            const val COL_DETAIL_DISASTER_CASE = "detail"
-            const val COL_REPORT_BY ="reportBy"
-            const val COL_LATITUDE = "latitude"
-            const val COL_LONGITUDE = "longitude"
-            const val COL_DATE_REPORT = "date"
-            const val COL_STATUS = "status"
+//            const val DISASTER_CASE_TABLE_NAME = "disasterdata"
+//            const val COL_ID_DISASTER_CASE = "_id"
+//            const val COL_DISASTER_IMAGE_CASE = "image"
+//            const val COL_LOCATION = "location"
+//            const val COL_DISASTER_TYPE = "type"
+//            const val COL_DETAIL_DISASTER_CASE = "detail"
+//            const val COL_REPORT_BY ="reportBy"
+//            const val COL_LATITUDE = "latitude"
+//            const val COL_LONGITUDE = "longitude"
+//            const val COL_DATE_REPORT = "date"
+//            const val COL_STATUS = "status"
         }
     }
 }

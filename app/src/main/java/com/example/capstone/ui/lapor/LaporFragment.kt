@@ -235,7 +235,7 @@ class LaporFragment : Fragment(), View.OnClickListener {
                 if (REQUEST_CODE!=0){
                     var image = imageURI
                     var intent = Intent(this.activity, DetailLaporActivity::class.java)
-                    intent.putExtra(DetailLaporActivity.KOTA, namaKota)
+                    intent.putExtra(DetailLaporActivity.LOCATION, namaKota)
                     intent.putExtra(DetailLaporActivity.ID_CASE, randomID)
                     intent.putExtra(DetailLaporActivity.LATITUDE, latitude)
                     intent.putExtra(DetailLaporActivity.LONGITUDE, longitude)

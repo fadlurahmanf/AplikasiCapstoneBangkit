@@ -9,12 +9,18 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.example.capstone.R
+import com.example.capstone.model.UserModel
 import com.example.capstone.ui.login.LoginActivity
 import com.example.capstone.utils.authentication.AuthenticationService
 import com.example.capstone.utils.database.UserHelper
 import com.example.capstone.utils.database.DatabaseContract.UserColumns.Companion.COL_FULL_NAME
 import com.example.capstone.utils.database.DatabaseContract.UserColumns.Companion.COL_PHONE_NUMBER
+import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.EMAIL_USER
+import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.FULL_NAME
+import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.PHONE_NUMBER
+import com.example.capstone.utils.firestore.FirestoreServices
 
 
 class ProfileFragment : Fragment(), View.OnClickListener {
@@ -24,8 +30,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private lateinit var emailText:TextView
     private lateinit var phoneNumberText:TextView
     private lateinit var imageUser:ImageView
-
-    private lateinit var userHelper: UserHelper
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -37,32 +41,32 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         initializationId(view)
 
-        userHelper = UserHelper(this.requireContext().applicationContext)
-        userHelper.open()
-
         getUserData()
 
         btn_signOut.setOnClickListener(this)
     }
 
     private fun getUserData() {
-        var authenticationService = AuthenticationService()
+        val authenticationService = AuthenticationService()
         var result = authenticationService.checkUserIsSignIn()
         var email = result?.email
 
-        var data = userHelper.getDataByEmail(email.toString())
-        data.moveToFirst()
-        if (data.moveToFirst()){
-            var fullName = data.getString(data.getColumnIndex("$COL_FULL_NAME"))
-            var phoneNumber = data.getString(data.getColumnIndex("$COL_PHONE_NUMBER"))
-            fullNameText.text = fullName.toString()
-            phoneNumberText.text = phoneNumber.toString()
-            emailText.text = email.toString()
-        }else{
-            
+        val firestoreServices = FirestoreServices()
+        var getQuery = firestoreServices.UserData().getUserDataByEmail(email.toString())
+        getQuery.addOnSuccessListener {
+            var userModel = UserModel()
+            userModel.email = it[EMAIL_USER]?.toString()
+            userModel.fullName = it[FULL_NAME]?.toString()
+            userModel.phoneNumber = it[PHONE_NUMBER]?.toString()
+            setData(userModel)
+        }.addOnFailureListener {
+            Toast.makeText(this.context, "${it.message.toString()}", Toast.LENGTH_LONG).show()
         }
-
-
+    }
+    private fun setData(user:UserModel){
+        fullNameText.text = user.email.toString()
+        phoneNumberText.text = user.phoneNumber.toString()
+        emailText.text = user.email.toString()
     }
 
     private fun initializationId(view: View){
