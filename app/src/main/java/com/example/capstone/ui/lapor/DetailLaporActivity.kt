@@ -163,12 +163,6 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
             R.id.activity_detail_lapor_btnSubmit->{
 //                insertDisasterCaseData()
 //                insertImageDisasterCaseToFirebaseStorage()
-                println(imageCase.width)
-                println(imageCase.height)
-                var imageUri = ConvertImage.getUriFromBitmap(imageCase, this)
-                var imageResult = handleBitmap(this, imageUri)
-                println(imageResult?.width)
-                println(imageResult?.height)
             }
         }
     }
@@ -206,15 +200,19 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
         try {
             exifInterface = ExifInterface(imageUri.path!!)
             var rotation:Int = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-            return when (orientation) {
-                ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(img!!, 90)
-                ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(img!!, 180)
-                ExifInterface.ORIENTATION_ROTATE_270 -> rotateImage(img!!, 270)
-                else -> img
+            if (rotation==ExifInterface.ORIENTATION_ROTATE_90){
+                imageBitmap = rotateImage(img!!, 90)
+            }else if (rotation==ExifInterface.ORIENTATION_ROTATE_180){
+                imageBitmap = rotateImage(img!!, 180)
+            }else if (rotation==ExifInterface.ORIENTATION_ROTATE_270){
+                imageBitmap = rotateImage(img!!, 270)
+            }else{
+                imageBitmap = img
             }
         }catch (e:IOException){
             println("rotate IMAGE GAGALLLLLLLLLLLLLLL")
         }
+        return imageBitmap
     }
 
     private fun rotateImage(imageBitmap: Bitmap, degree:Int): Bitmap? {
