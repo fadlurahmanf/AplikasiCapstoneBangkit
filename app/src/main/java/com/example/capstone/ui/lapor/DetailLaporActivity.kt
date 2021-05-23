@@ -166,4 +166,5 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+
 }
