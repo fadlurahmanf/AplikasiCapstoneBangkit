@@ -36,6 +36,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/oval_background"
         android:backgroundTint="@color/purple_200"
         android:padding="10dp"
@@ -77,12 +79,13 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline8"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragmenthome_title_aboutAncana" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="181dp" />
+            app:layout_constraintGuide_percent="0.5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -91,7 +94,9 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"
         android:layout_marginVertical="15dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="64dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/oval_background"
         android:backgroundTint="@color/purple_200"
         android:padding="10dp"
@@ -146,8 +151,8 @@
 
         <ImageView
             android:id="@+id/logo_bnpb_home"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/logo_bnpb"
             app:layout_constraintEnd_toStartOf="@+id/guideline7"
