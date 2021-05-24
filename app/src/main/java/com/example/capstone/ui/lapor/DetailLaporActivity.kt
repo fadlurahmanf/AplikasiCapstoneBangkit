@@ -52,8 +52,6 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var emailUser:String
     lateinit var phoneNumberUser:String
 
-    lateinit var imagePath:String
-
     companion object{
         val IMAGE_REQUEST_TYPE = "IMAGE_REQUEST_TYPE"
         val IMAGE_RESULT = "IMAGE_RESULT"
@@ -94,8 +92,9 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
     private fun getUserData(){
         val firestoreServices = FirestoreServices()
         var getDataQuery = firestoreServices.UserData().getUserDataByEmail(emailUser)
-        getDataQuery.addOnSuccessListener {
-            phoneNumberUser = it[PHONE_NUMBER].toString()
+        getDataQuery.addOnCompleteListener {
+            var result = it.result
+            phoneNumberUser = result[PHONE_NUMBER].toString()
         }
     }
 
@@ -165,6 +164,7 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
         when(v?.id){
             R.id.activity_detail_lapor_btnSubmit->{
                 insertDisasterCaseData()
+//                println(phoneNumberUser)
             }
         }
     }
