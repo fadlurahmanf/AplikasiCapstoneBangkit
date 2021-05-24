@@ -25,7 +25,9 @@ import com.example.capstone.utils.database.DisasterCaseHelper
 import com.example.capstone.utils.firebasestorage.FirebasestorageServices
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_DISASTER_CASE_DETAIL
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_DISASTER_CASE_LOCATION
+import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_DISASTER_CASE_STATUS
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_DISASTER_ID_CASE
+import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_DISASTER_IMAGE_CASE
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_DISASTER_LATITUDE
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_DISASTER_LONGITUDE
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_REPORT_BY_EMAIL
@@ -49,8 +51,6 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var disasterCaseHelper: DisasterCaseHelper
     lateinit var emailUser:String
     lateinit var phoneNumberUser:String
-
-    lateinit var imagePath:String
 
     companion object{
         val IMAGE_REQUEST_TYPE = "IMAGE_REQUEST_TYPE"
@@ -92,8 +92,9 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
     private fun getUserData(){
         val firestoreServices = FirestoreServices()
         var getDataQuery = firestoreServices.UserData().getUserDataByEmail(emailUser)
-        getDataQuery.addOnSuccessListener {
-            phoneNumberUser = it[PHONE_NUMBER].toString()
+        getDataQuery.addOnCompleteListener {
+            var result = it.result
+            phoneNumberUser = result[PHONE_NUMBER].toString()
         }
     }
 
@@ -120,11 +121,13 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
         var disasterCaseData:MutableMap<String, Any> = HashMap()
         disasterCaseData.put(COL_DISASTER_ID_CASE, extras?.get(ID_CASE).toString())
         disasterCaseData.put(COL_REPORT_BY_EMAIL, emailUser.toString())
+        disasterCaseData.put(COL_DISASTER_IMAGE_CASE, "${extras?.getString(ID_CASE)}.png")
         disasterCaseData.put(COL_REPORT_BY_PHONE_NUMBER, phoneNumberUser.toString())
         disasterCaseData.put(COL_DISASTER_CASE_LOCATION, extras?.get(LOCATION).toString())
         disasterCaseData.put(COL_DISASTER_LATITUDE, extras?.get(LATITUDE).toString())
         disasterCaseData.put(COL_DISASTER_LONGITUDE, extras?.get(LONGITUDE).toString())
         disasterCaseData.put(COL_DISASTER_CASE_DETAIL, disasterCaseDetail.text.toString())
+        disasterCaseData.put(COL_DISASTER_CASE_STATUS, "waiting")
         var insertQuery = firestoreServices.DisasterCaseData().insertDisasterCaseData(disasterCaseData)
         insertQuery.addOnSuccessListener {
             insertImageDisasterCaseToFirebaseStorage()
@@ -156,12 +159,12 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
             Toast.makeText(this, "${it.message}", Toast.LENGTH_LONG).show()
         }
     }
-
-    @RequiresApi(Build.VERSION_CODES.Q)
+    
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.activity_detail_lapor_btnSubmit->{
                 insertDisasterCaseData()
+//                println(phoneNumberUser)
             }
         }
     }
