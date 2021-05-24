@@ -26,6 +26,7 @@ import com.example.capstone.utils.firebasestorage.FirebasestorageServices
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_DISASTER_CASE_DETAIL
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_DISASTER_CASE_LOCATION
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_DISASTER_CASE_STATUS
+import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_DISASTER_DATE_TIME
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_DISASTER_ID_CASE
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_DISASTER_IMAGE_CASE
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_DISASTER_LATITUDE
@@ -36,6 +37,11 @@ import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Compan
 import com.example.capstone.utils.firestore.FirestoreServices
 import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.HashMap
 
 
 class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
@@ -51,8 +57,7 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var disasterCaseHelper: DisasterCaseHelper
     lateinit var emailUser:String
     lateinit var phoneNumberUser:String
-
-    lateinit var imagePath:String
+    lateinit var dateTimeNow:LocalDateTime
 
     companion object{
         val IMAGE_REQUEST_TYPE = "IMAGE_REQUEST_TYPE"
@@ -66,6 +71,12 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_lapor)
         supportActionBar?.title = "DETAIL SUBMIT REPORT"
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            dateTimeNow = LocalDateTime.now()
+        }
+
+
 
         isUserIsSignIn()
         getUserData()
@@ -94,8 +105,9 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
     private fun getUserData(){
         val firestoreServices = FirestoreServices()
         var getDataQuery = firestoreServices.UserData().getUserDataByEmail(emailUser)
-        getDataQuery.addOnSuccessListener {
-            phoneNumberUser = it[PHONE_NUMBER].toString()
+        getDataQuery.addOnCompleteListener {
+            var result = it.result
+            phoneNumberUser = result[PHONE_NUMBER].toString()
         }
     }
 
@@ -121,6 +133,7 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
         val firestoreServices = FirestoreServices()
         var disasterCaseData:MutableMap<String, Any> = HashMap()
         disasterCaseData.put(COL_DISASTER_ID_CASE, extras?.get(ID_CASE).toString())
+        disasterCaseData.put(COL_DISASTER_DATE_TIME, System.currentTimeMillis().toString())
         disasterCaseData.put(COL_REPORT_BY_EMAIL, emailUser.toString())
         disasterCaseData.put(COL_DISASTER_IMAGE_CASE, "${extras?.getString(ID_CASE)}.png")
         disasterCaseData.put(COL_REPORT_BY_PHONE_NUMBER, phoneNumberUser.toString())
@@ -169,5 +182,10 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun getDateByTimeStamp(timestamp:Long){
+        val sdf = SimpleDateFormat("dd/MM/yy hh:mm a")
+        val netDate = Date(timestamp)
+        println(sdf.format(netDate))
+    }
 
 }

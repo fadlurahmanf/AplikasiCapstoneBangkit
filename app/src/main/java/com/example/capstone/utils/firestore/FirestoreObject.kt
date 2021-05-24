@@ -15,6 +15,7 @@ object FirestoreObject {
         companion object{
             const val TABLE_DISASTER_CASE_DATA = "disasterCaseData"
             const val COL_DISASTER_ID_CASE = "_id"
+            const val COL_DISASTER_DATE_TIME = "date_time"
             const val COL_REPORT_BY_EMAIL = "email"
             const val COL_REPORT_BY_PHONE_NUMBER = "phone_number"
             const val COL_DISASTER_IMAGE_CASE = "image"
