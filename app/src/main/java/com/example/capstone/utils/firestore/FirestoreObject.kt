@@ -22,7 +22,7 @@ object FirestoreObject {
             const val COL_DISASTER_CASE_LOCATION = "location"
             const val COL_DISASTER_LATITUDE = "latitude"
             const val COL_DISASTER_LONGITUDE = "longitude"
-            const val COL_DISASTER_TYPE = "type"
+            const val COL_DISASTER_TYPE = "tipe_bencana"
             const val COL_DISASTER_CASE_DETAIL = "detail"
             const val COL_DISASTER_CASE_STATUS = "status"
         }
