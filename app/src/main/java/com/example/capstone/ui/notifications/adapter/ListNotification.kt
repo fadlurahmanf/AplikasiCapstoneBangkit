@@ -1,4 +1,4 @@
-package com.example.adminaplikasicapstone.utils.adapter
+package com.example.capstone.ui.notifications.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.capstone.R
 import com.example.capstone.model.DisasterCaseDataModels
 
-class ListDisasterCaseAdapter(var listDisasterCase: ArrayList<DisasterCaseDataModels>):RecyclerView.Adapter<ListDisasterCaseAdapter.ListViewHolder>() {
+class ListNotification(var listDisasterCase: ArrayList<DisasterCaseDataModels>): RecyclerView.Adapter<ListNotification.ListViewHolder>() {
     private lateinit var onItemClickCallback:OnItemClickCallback
 
     interface OnItemClickCallback {
@@ -21,15 +21,16 @@ class ListDisasterCaseAdapter(var listDisasterCase: ArrayList<DisasterCaseDataMo
         this.onItemClickCallback = onItemClickCallback
     }
 
-    inner class ListViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
-        var disasterCaseType: TextView = itemView.findViewById(R.id.item_title_dashboard)
-        var disasterCasePhoto:ImageView = itemView.findViewById(R.id.item_foto_dashboard)
-        var disasterCaseLocation:TextView = itemView.findViewById(R.id.item_content_dashboard)
-        var disasterCaseDateTime:TextView = itemView.findViewById(R.id.item_waktu_dashboard)
+    inner class ListViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
+        var disasterCaseType: TextView = itemView.findViewById(R.id.item_title_notification)
+        var disasterCasePhoto: ImageView = itemView.findViewById(R.id.item_foto_notification)
+        var disasterCaseLocation: TextView = itemView.findViewById(R.id.item_content_notification)
+        var disasterCaseDateTime: TextView = itemView.findViewById(R.id.item_waktu_notification)
+        var disasterCaseProgress: TextView = itemView.findViewById(R.id.item_progress_notification)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        var view = LayoutInflater.from(parent.context).inflate(R.layout.item_dashboard, parent, false)
+        var view = LayoutInflater.from(parent.context).inflate(R.layout.item_notification, parent, false)
         return ListViewHolder(view)
     }
 
@@ -44,7 +45,7 @@ class ListDisasterCaseAdapter(var listDisasterCase: ArrayList<DisasterCaseDataMo
         holder.disasterCaseLocation.text = disasterCaseData.disasterLocation.toString()
         holder.disasterCaseDateTime.text = disasterCaseData.disasterDateTime.toString()
         holder.disasterCaseType.text = disasterCaseData.disasterType.toString()
+        holder.disasterCaseProgress.text = disasterCaseData.disasterCaseStatus.toString()
 
     }
-
 }
