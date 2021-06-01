@@ -45,6 +45,10 @@ class ListDisasterCaseAdapter(var listDisasterCase: ArrayList<DisasterCaseDataMo
         holder.disasterCaseDateTime.text = disasterCaseData.disasterDateTime.toString()
         holder.disasterCaseType.text = disasterCaseData.disasterType.toString()
 
+        holder.itemView.setOnClickListener {
+            println(disasterCaseData.disasterCaseDataPhoto)
+        }
+
     }
 
 }

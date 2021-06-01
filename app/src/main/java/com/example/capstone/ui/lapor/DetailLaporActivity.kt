@@ -17,6 +17,7 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.exifinterface.media.ExifInterface
+import com.example.capstone.HomePageActivity
 import com.example.capstone.R
 import com.example.capstone.SplashScreen
 import com.example.capstone.utils.ConvertImage
@@ -52,6 +53,10 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var btn_submit:Button
     private lateinit var disasterType:TextView
     private lateinit var disasterCaseDetail:EditText
+    private lateinit var progressBar: ProgressBar
+    private lateinit var linearlayout1:LinearLayout
+    private lateinit var linearlayout2:LinearLayout
+    private lateinit var linearlayout3:LinearLayout
 
     lateinit var imageCase:Bitmap
     private lateinit var disasterCaseHelper: DisasterCaseHelper
@@ -155,9 +160,15 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
         disasterLocation = findViewById(R.id.activity_detail_lapor_disasterLocation)
         btn_submit = findViewById(R.id.activity_detail_lapor_btnSubmit)
         disasterType = findViewById(R.id.activity_detail_lapor_disasterType)
+        progressBar = findViewById(R.id.activity_detail_lapor_loadingBar)
         disasterCaseDetail = findViewById(R.id.activity_detail_lapor_disasterDetail)
+        linearlayout1 = findViewById(R.id.activity_detail_lapor_linearLayout1)
+        linearlayout2 = findViewById(R.id.activity_detail_lapor_linearLayout2)
+        linearlayout3 = findViewById(R.id.activity_detail_lapor_linearLayout3)
 
         btn_submit.setOnClickListener(this)
+
+        progressBar.visibility = View.INVISIBLE
     }
 
     private fun insertImageDisasterCaseToFirebaseStorage(){
@@ -169,7 +180,15 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
         var insertQuery = firebasestorageServices.disasterCaseData().insertImageDisasterCase("${intent.extras?.getString(ID_CASE)}.png", data)
         insertQuery.addOnSuccessListener {
             Toast.makeText(this, "BERHASIL UPLOAD", Toast.LENGTH_LONG).show()
+            val intent = Intent(this, HomePageActivity::class.java)
+            startActivity(intent)
         }.addOnFailureListener {
+            progressBar.visibility = View.INVISIBLE
+            imageView.visibility = View.VISIBLE
+            linearlayout1.visibility = View.VISIBLE
+            linearlayout2.visibility = View.VISIBLE
+            linearlayout3.visibility = View.VISIBLE
+            btn_submit.visibility = View.VISIBLE
             Toast.makeText(this, "${it.message}", Toast.LENGTH_LONG).show()
         }
     }
@@ -177,6 +196,12 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.activity_detail_lapor_btnSubmit->{
+                progressBar.visibility = View.VISIBLE
+                imageView.visibility = View.INVISIBLE
+                linearlayout1.visibility = View.INVISIBLE
+                linearlayout2.visibility = View.INVISIBLE
+                linearlayout3.visibility = View.INVISIBLE
+                btn_submit.visibility = View.INVISIBLE
                 insertDisasterCaseData()
             }
         }

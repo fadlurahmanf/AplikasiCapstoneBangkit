@@ -13,6 +13,7 @@ class FirebasestorageServices {
     inner class disasterCaseData{
         fun insertImageDisasterCase(imageName: String,imageFile:ByteArray): UploadTask {
             var storeLocation =  storageServices.getReference().child("$DISASTER_CASE_FOLDER_NAME/$imageName")
+//            var storeLocation =  storageServices.getReferenceFromUrl("gs://ancana-b21-cap0252.appspot.com/").child("$DISASTER_CASE_FOLDER_NAME/$imageName")
             return storeLocation.putBytes(imageFile)
         }
         fun getImageURLByName(name:String): Task<Uri> {
