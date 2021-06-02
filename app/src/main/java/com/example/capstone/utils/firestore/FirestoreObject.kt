@@ -8,6 +8,7 @@ object FirestoreObject {
             const val EMAIL_USER = "email"
             const val PHONE_NUMBER = "phone_number"
             const val PASSWORD_USER = "password"
+            const val IMAGE_PROFILE_USER = "imageProfile"
         }
     }
 

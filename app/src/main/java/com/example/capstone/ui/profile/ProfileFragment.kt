@@ -21,6 +21,9 @@ import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Compan
 import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.FULL_NAME
 import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.PHONE_NUMBER
 import com.example.capstone.utils.firestore.FirestoreServices
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class ProfileFragment : Fragment(), View.OnClickListener {
@@ -54,11 +57,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         val firestoreServices = FirestoreServices()
         var getQuery = firestoreServices.UserData().getUserDataByEmail(email.toString())
         getQuery.addOnSuccessListener {
-            var userModel = UserModel()
-            userModel.email = it[EMAIL_USER]?.toString()
-            userModel.fullName = it[FULL_NAME]?.toString()
-            userModel.phoneNumber = it[PHONE_NUMBER]?.toString()
-            setData(userModel)
+            GlobalScope.launch(Dispatchers.IO) {
+                var userModel = UserModel()
+                userModel.email = it[EMAIL_USER]?.toString()
+                userModel.fullName = it[FULL_NAME]?.toString()
+                userModel.phoneNumber = it[PHONE_NUMBER]?.toString()
+                setData(userModel)
+            }
         }.addOnFailureListener {
             Toast.makeText(this.context, "${it.message.toString()}", Toast.LENGTH_LONG).show()
         }

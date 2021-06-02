@@ -16,6 +16,7 @@ import com.example.capstone.utils.authentication.AuthenticationService
 import com.example.capstone.utils.firebasestorage.FirebasestorageServices
 import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.EMAIL_USER
 import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.FULL_NAME
+import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.IMAGE_PROFILE_USER
 import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.PASSWORD_USER
 import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.PHONE_NUMBER
 import com.example.capstone.utils.firestore.FirestoreServices
@@ -86,22 +87,23 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         imagePhotoUser.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         var data = baos.toByteArray()
         var firebasestorageServices = FirebasestorageServices()
-        var randomPhotoName:String = UUID.randomUUID().toString()
-        val insertQuery = firebasestorageServices.userData().insertImageProfileUser("${randomPhotoName}.png", data)
+        var randomPhotoName:String = "${UUID.randomUUID().toString()}.png"
+        val insertQuery = firebasestorageServices.userData().insertImageProfileUser("$randomPhotoName", data)
         insertQuery.addOnSuccessListener {
-            registerDataToFirestore()
+            registerDataToFirestore(randomPhotoName)
         }.addOnFailureListener {
             Toast.makeText(this, "ERROR ${it.message}", Toast.LENGTH_LONG).show()
         }
     }
 
-    private fun registerDataToFirestore(){
+    private fun registerDataToFirestore(randomPhotoName:String){
         val firestoreServices = FirestoreServices()
         var user:MutableMap<String, Any> = HashMap()
         user.put(FULL_NAME, full_name.text.toString())
         user.put(EMAIL_USER, email.text.toString())
         user.put(PHONE_NUMBER, phoneNumber.text.toString())
         user.put(PASSWORD_USER, password.text.toString())
+        user.put(IMAGE_PROFILE_USER, randomPhotoName)
 
         var insertQuery = firestoreServices.UserData().insertUserData(user)
         insertQuery.addOnSuccessListener {
