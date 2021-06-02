@@ -3,15 +3,13 @@ package com.example.capstone.utils.firestore
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.capstone.model.UserModel
+import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_DISASTER_DATE_TIME
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_DISASTER_ID_CASE
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.TABLE_DISASTER_CASE_DATA
 import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.EMAIL_USER
 import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.TABLE_USER_DATA
 import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.*
 
 class FirestoreServices {
     var db = FirebaseFirestore.getInstance()
@@ -29,6 +27,12 @@ class FirestoreServices {
     inner class DisasterCaseData{
         fun insertDisasterCaseData(disasterCaseDataModel:MutableMap<String, Any>): Task<Void> {
             return db.collection(TABLE_DISASTER_CASE_DATA).document(disasterCaseDataModel[COL_DISASTER_ID_CASE].toString()).set(disasterCaseDataModel)
+        }
+        fun getAllDisasterCaseDataByStatus(status:String): Task<QuerySnapshot> {
+            return db.collection(TABLE_DISASTER_CASE_DATA)
+                .orderBy(COL_DISASTER_DATE_TIME, Query.Direction.ASCENDING)
+                .get()
+
         }
     }
 }

@@ -10,7 +10,7 @@
 
   <ImageView
       android:layout_width="250dp"
-      android:src="@color/color_primary_darker"
+      android:src="@drawable/logo_ancana"
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintLeft_toLeftOf="parent"
       app:layout_constraintRight_toRightOf="parent"

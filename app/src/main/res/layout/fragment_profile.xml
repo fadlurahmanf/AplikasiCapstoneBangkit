@@ -17,11 +17,12 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/fragmentprofile_imageuser"
             android:layout_width="170dp"
             android:layout_height="170dp"
-            android:background="@color/black"
+            android:background="@color/white"
+            app:shapeAppearanceOverlay="@style/circle_box"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

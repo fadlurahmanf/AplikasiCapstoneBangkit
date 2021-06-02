@@ -1,9 +1,12 @@
 package com.example.capstone.ui.home
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -48,8 +51,33 @@ class HomeFragment : Fragment() {
             layoutPenanggulanganBencana.layoutManager = LinearLayoutManager(this.context, LinearLayoutManager.HORIZONTAL, false)
             layoutPenanggulanganBencana.adapter = adapter
 
-            aboutAncana.setOnClickListener {
+            var pemadam:ImageView = view.findViewById(R.id.logo_pemadam_home)
+            var basarnas:ImageView = view.findViewById(R.id.logo_basarnas_home)
+            var polisi:ImageView = view.findViewById(R.id.logo_polisi_home)
+            var bnpb:ImageView = view.findViewById(R.id.logo_bnpb_home)
+            var kemenkes:ImageView = view.findViewById(R.id.logo_kemenkes)
+
+            pemadam.setOnClickListener {
+                call(view, "113")
+            }
+            basarnas.setOnClickListener {
+                call(view, "115")
+            }
+            polisi.setOnClickListener {
+                call(view, "110")
+            }
+            bnpb.setOnClickListener {
+                call(view, "117")
+            }
+            kemenkes.setOnClickListener {
+                call(view, "119")
             }
         }
+    }
+
+    private fun call(view: View, input: String){
+        val dialIntent = Intent(Intent.ACTION_DIAL)
+        dialIntent.data = Uri.parse("tel:" + input)
+        startActivity(dialIntent)
     }
 }
