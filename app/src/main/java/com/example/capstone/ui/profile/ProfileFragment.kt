@@ -24,6 +24,7 @@ import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Compan
 import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.IMAGE_PROFILE_USER
 import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.PHONE_NUMBER
 import com.example.capstone.utils.firestore.FirestoreServices
+import com.google.android.material.imageview.ShapeableImageView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -37,7 +38,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private lateinit var fullNameText:TextView
     private lateinit var emailText:TextView
     private lateinit var phoneNumberText:TextView
-    private lateinit var imageUser:ImageView
+    private lateinit var imageUser:ShapeableImageView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -80,7 +81,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         }
     }
     private fun setData(user:UserModel){
-        fullNameText.text = user.email.toString()
+        fullNameText.text = user.fullName.toString()
         phoneNumberText.text = user.phoneNumber.toString()
         emailText.text = user.email.toString()
         Glide.with(imageUser).load(user.imageProfile).into(imageUser)
