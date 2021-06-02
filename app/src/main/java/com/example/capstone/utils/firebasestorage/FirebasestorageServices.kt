@@ -26,5 +26,9 @@ class FirebasestorageServices {
             var storeLocation = storageServices.getReference().child("$USERDATA_FOLDER_NAME/$imageName")
             return storeLocation.putBytes(imageFile)
         }
+        fun getImageURLbyName(imageName: String): Task<Uri> {
+            var storeLocation = storageServices.getReference().child("$USERDATA_FOLDER_NAME/$imageName").downloadUrl
+            return storeLocation
+        }
     }
 }

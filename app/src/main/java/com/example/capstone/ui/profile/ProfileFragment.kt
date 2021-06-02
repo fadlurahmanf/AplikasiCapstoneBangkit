@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.example.capstone.R
 import com.example.capstone.model.UserModel
 import com.example.capstone.ui.login.LoginActivity
@@ -17,13 +18,17 @@ import com.example.capstone.utils.authentication.AuthenticationService
 import com.example.capstone.utils.database.UserHelper
 import com.example.capstone.utils.database.DatabaseContract.UserColumns.Companion.COL_FULL_NAME
 import com.example.capstone.utils.database.DatabaseContract.UserColumns.Companion.COL_PHONE_NUMBER
+import com.example.capstone.utils.firebasestorage.FirebasestorageServices
 import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.EMAIL_USER
 import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.FULL_NAME
+import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.IMAGE_PROFILE_USER
 import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.PHONE_NUMBER
 import com.example.capstone.utils.firestore.FirestoreServices
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 
 class ProfileFragment : Fragment(), View.OnClickListener {
@@ -62,7 +67,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 userModel.email = it[EMAIL_USER]?.toString()
                 userModel.fullName = it[FULL_NAME]?.toString()
                 userModel.phoneNumber = it[PHONE_NUMBER]?.toString()
-                setData(userModel)
+                var imageProfileUserURL = it[IMAGE_PROFILE_USER].toString()
+                var firebasestorageServices = FirebasestorageServices()
+                var getQuery = firebasestorageServices.userData().getImageURLbyName(imageProfileUserURL).await()
+                userModel.imageProfile = getQuery.toString()
+                withContext(Dispatchers.Main){
+                    setData(userModel)
+                }
             }
         }.addOnFailureListener {
             Toast.makeText(this.context, "${it.message.toString()}", Toast.LENGTH_LONG).show()
@@ -72,6 +83,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         fullNameText.text = user.email.toString()
         phoneNumberText.text = user.phoneNumber.toString()
         emailText.text = user.email.toString()
+        Glide.with(imageUser).load(user.imageProfile).into(imageUser)
     }
 
     private fun initializationId(view: View){
