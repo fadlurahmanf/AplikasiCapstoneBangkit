@@ -182,6 +182,7 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
             Toast.makeText(this, "BERHASIL UPLOAD", Toast.LENGTH_LONG).show()
             val intent = Intent(this, HomePageActivity::class.java)
             startActivity(intent)
+            finish()
         }.addOnFailureListener {
             progressBar.visibility = View.INVISIBLE
             imageView.visibility = View.VISIBLE

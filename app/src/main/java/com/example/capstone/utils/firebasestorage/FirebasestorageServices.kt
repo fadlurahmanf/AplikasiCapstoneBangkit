@@ -3,6 +3,7 @@ package com.example.capstone.utils.firebasestorage
 import android.graphics.Bitmap
 import android.net.Uri
 import com.example.capstone.utils.firebasestorage.FirebasestorageObject.DisasterCaseDataStorage.Companion.DISASTER_CASE_FOLDER_NAME
+import com.example.capstone.utils.firebasestorage.FirebasestorageObject.DisasterCaseDataStorage.Companion.USERDATA_FOLDER_NAME
 import com.google.android.gms.tasks.Task
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -18,6 +19,12 @@ class FirebasestorageServices {
         }
         fun getImageURLByName(name:String): Task<Uri> {
             return storageServices.getReference().child("disasterCaseData/${name}").downloadUrl
+        }
+    }
+    inner class userData{
+        fun insertImageProfileUser(imageName: String, imageFile: ByteArray): UploadTask {
+            var storeLocation = storageServices.getReference().child("$USERDATA_FOLDER_NAME/$imageName")
+            return storeLocation.putBytes(imageFile)
         }
     }
 }

@@ -73,7 +73,7 @@
             android:id="@+id/activity_detail_lapor_disasterType"
             android:gravity="center"
             android:paddingHorizontal="50dp"
-            android:text="JENIS BENCANA"
+            android:text="TIPE BENCANA"
             android:textColor="@color/black"
             android:background="@drawable/box_all_around_corner"
             android:layout_height="wrap_content"/>

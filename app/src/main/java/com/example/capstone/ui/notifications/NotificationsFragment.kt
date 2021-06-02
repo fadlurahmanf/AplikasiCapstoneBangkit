@@ -36,6 +36,7 @@ class NotificationsFragment : Fragment() {
     private lateinit var loadingProgressBar: ProgressBar
     private var listDisasterCaseData:ArrayList<DisasterCaseDataModels> = ArrayList<DisasterCaseDataModels>()
     private var userModel = UserModel()
+    lateinit var emailUser:String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,10 +80,10 @@ class NotificationsFragment : Fragment() {
     private fun getUserData() {
         val authenticationService = AuthenticationService()
         var result = authenticationService.checkUserIsSignIn()
-        var email = result?.email
+        emailUser = result?.email.toString()
 
         val firestoreServices = FirestoreServices()
-        var getQuery = firestoreServices.UserData().getUserDataByEmail(email.toString())
+        var getQuery = firestoreServices.UserData().getUserDataByEmail(emailUser)
         getQuery.addOnSuccessListener {
             userModel.email = it[FirestoreObject.UserDataTable.EMAIL_USER]?.toString()
             userModel.fullName = it[FirestoreObject.UserDataTable.FULL_NAME]?.toString()
@@ -121,8 +122,6 @@ class NotificationsFragment : Fragment() {
                             disasterCaseDataModels.disasterCaseDetail = document[FirestoreObject.DisasterCaseDataTable.COL_DISASTER_CASE_DETAIL].toString()
                             listDisasterCaseData.add(disasterCaseDataModels)
                         }
-
-
                     }
                     withContext(Dispatchers.Main){
                         setRecycleViewLayout()
