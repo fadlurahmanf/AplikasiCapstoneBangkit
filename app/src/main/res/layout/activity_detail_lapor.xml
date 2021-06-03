@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ui.lapor.DetailLaporActivity">
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/activity_detail_lapor_loadingBar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
     <ImageView
         android:layout_width="350dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -64,7 +73,7 @@
             android:id="@+id/activity_detail_lapor_disasterType"
             android:gravity="center"
             android:paddingHorizontal="50dp"
-            android:text="JENIS BENCANA"
+            android:text="TIPE BENCANA"
             android:textColor="@color/black"
             android:background="@drawable/box_all_around_corner"
             android:layout_height="wrap_content"/>

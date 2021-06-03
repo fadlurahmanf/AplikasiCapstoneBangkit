@@ -4,12 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/purple_200"
     tools:context=".SplashScreen">
 
     <ImageView
-        android:layout_width="match_parent"
-        android:background="@drawable/splash_screen_background"
         android:id="@+id/splashscreenimage"
-        android:layout_height="match_parent"/>
+        android:layout_width="255dp"
+        android:layout_height="250dp"
+        android:background="@drawable/logo_ancana"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
