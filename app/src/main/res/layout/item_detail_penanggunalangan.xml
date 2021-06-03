@@ -13,7 +13,7 @@
         android:layout_marginTop="16dp"
         android:text="Todo"
         android:textColor="@color/purple_200"
-        android:textSize="16dp"
+        android:textSize="14dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,7 +26,7 @@
         android:layout_marginTop="10dp"
         android:text="Detail"
         android:textColor="@color/white"
-        android:textSize="14dp"
+        android:textSize="12dp"
         android:textStyle="normal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/item_todo_title"
