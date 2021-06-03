@@ -36,6 +36,7 @@ import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTabl
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_REPORT_BY_PHONE_NUMBER
 import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.PHONE_NUMBER
 import com.example.capstone.utils.firestore.FirestoreServices
+import com.squareup.okhttp.RequestBody
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
