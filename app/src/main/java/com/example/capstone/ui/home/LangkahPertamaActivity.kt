@@ -82,7 +82,7 @@ class LangkahPertamaActivity : AppCompatActivity() {
                     Log.d("langkah", listLangkahPertama.toString())
                     var langkahpertama2 = LangkahPertamaModel()
                     langkahpertama2.todo = it[FirestoreObject.LangkahPertamaData.TODO2]?.toString()
-                    langkahpertama2.detail = it[FirestoreObject.LangkahPertamaData.TODO2]?.toString()
+                    langkahpertama2.detail = it[FirestoreObject.LangkahPertamaData.DETAIL2]?.toString()
                     listLangkahPertama.add(langkahpertama2)
                     Log.d("langkah", listLangkahPertama.toString())
                     var langkahpertama3 = LangkahPertamaModel()
