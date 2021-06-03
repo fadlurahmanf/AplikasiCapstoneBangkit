@@ -8,14 +8,14 @@ object PenanggulanganBencanaData {
             "Gempa Bumi",
             "Banjir",
             "Kebakaran",
-            "Tanah Longsor",
+//            "Tanah Longsor",
             "Angin Topan"
     )
     private val fotoBencana = intArrayOf(
             R.drawable.earhquake,
             R.drawable.flood,
             R.drawable.wildfire,
-            R.drawable.landslide,
+//            R.drawable.landslide,
             R.drawable.hurricane
     )
     val listData:ArrayList<PenanggulanganBencanaModel>
