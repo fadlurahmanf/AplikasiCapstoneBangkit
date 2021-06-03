@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
@@ -19,16 +20,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
+import androidx.core.graphics.drawable.toBitmap
 import androidx.navigation.fragment.findNavController
 import com.example.capstone.R
+import com.example.capstone.model.PostImageResponse
+import com.example.capstone.utils.api.ApiConfig
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
+import kotlinx.coroutines.*
+import kotlinx.coroutines.runBlocking
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.ByteArrayOutputStream
+import retrofit2.Callback
+import retrofit2.Call
+import retrofit2.Response
 import java.util.*
 
 
@@ -58,6 +68,8 @@ class LaporFragment : Fragment(), View.OnClickListener {
     private var REQUEST_CODE = 0
 
     private lateinit var locationRequest: LocationRequest
+
+    private lateinit var imagePrediction:String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -231,28 +243,57 @@ class LaporFragment : Fragment(), View.OnClickListener {
 
             }
             R.id.fragmentlapor_submitreport->{
-                var randomID = getRandomID()
-                if (REQUEST_CODE!=0){
-                    var image = imageURI
-                    var intent = Intent(this.activity, DetailLaporActivity::class.java)
-                    intent.putExtra(DetailLaporActivity.LOCATION, namaKota)
-                    intent.putExtra(DetailLaporActivity.ID_CASE, randomID)
-                    intent.putExtra(DetailLaporActivity.LATITUDE, latitude)
-                    intent.putExtra(DetailLaporActivity.LONGITUDE, longitude)
-                    if (REQUEST_CODE==REQUEST_PICK_FROM_GALLERY){
-                        image = imageURI as Uri
-                        intent.putExtra(DetailLaporActivity.IMAGE_RESULT, image)
-                        intent.putExtra(DetailLaporActivity.IMAGE_REQUEST_TYPE, "GALLERY")
-                    }
-                    if (REQUEST_CODE==REQUEST_PICK_FROM_CAMERA){
-                        image = imageURI as Bitmap
-                        intent.putExtra(DetailLaporActivity.IMAGE_RESULT, image)
-                        intent.putExtra(DetailLaporActivity.IMAGE_REQUEST_TYPE, "CAMERA")
-                    }
-                    startActivity(intent)
-                }
+                var image = (photoResult.drawable as BitmapDrawable).toBitmap()
+
+                predictImage(image, this.requireContext())
+
             }
         }
+    }
+
+    private fun sendDataToDetailLaporActivity(){
+        var randomID = getRandomID()
+        if (REQUEST_CODE!=0){
+            var image = imageURI
+            var intent = Intent(this.activity, DetailLaporActivity::class.java)
+            intent.putExtra(DetailLaporActivity.LOCATION, namaKota)
+            intent.putExtra(DetailLaporActivity.TYPE, imagePrediction)
+            intent.putExtra(DetailLaporActivity.ID_CASE, randomID)
+            intent.putExtra(DetailLaporActivity.LATITUDE, latitude)
+            intent.putExtra(DetailLaporActivity.LONGITUDE, longitude)
+            if (REQUEST_CODE==REQUEST_PICK_FROM_GALLERY){
+                image = imageURI as Uri
+                intent.putExtra(DetailLaporActivity.IMAGE_RESULT, image)
+                intent.putExtra(DetailLaporActivity.IMAGE_REQUEST_TYPE, "GALLERY")
+            }
+            if (REQUEST_CODE==REQUEST_PICK_FROM_CAMERA){
+                image = imageURI as Bitmap
+                intent.putExtra(DetailLaporActivity.IMAGE_RESULT, image)
+                intent.putExtra(DetailLaporActivity.IMAGE_REQUEST_TYPE, "CAMERA")
+            }
+            startActivity(intent)
+        }
+    }
+
+    private fun predictImage(image:Bitmap, context: Context){
+        var baos = ByteArrayOutputStream()
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        var dataImage = baos.toByteArray()
+        var file = dataImage
+        var requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+        var body = MultipartBody.Part.createFormData("file", "filename", requestFile)
+
+        val client = ApiConfig.getApiService().postImage(body)
+        client.enqueue(object :Callback<PostImageResponse>{
+            override fun onFailure(call: Call<PostImageResponse>, t: Throwable) {
+                println("GAGALLLLLL")
+                Toast.makeText(context, "ERROR ${t.message}", Toast.LENGTH_LONG).show()
+            }
+            override fun onResponse(call: Call<PostImageResponse>, response: Response<PostImageResponse>) {
+                imagePrediction = response.body()?.type.toString()
+                sendDataToDetailLaporActivity()
+            }
+        })
     }
 
     private fun ambilFotoDariGaleri() {
