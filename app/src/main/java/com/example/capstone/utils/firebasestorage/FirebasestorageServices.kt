@@ -11,6 +11,7 @@ import com.google.firebase.storage.UploadTask
 
 class FirebasestorageServices {
     val storageServices = FirebaseStorage.getInstance()
+
     inner class disasterCaseData{
         fun insertImageDisasterCase(imageName: String,imageFile:ByteArray): UploadTask {
             var storeLocation =  storageServices.getReference().child("$DISASTER_CASE_FOLDER_NAME/$imageName")

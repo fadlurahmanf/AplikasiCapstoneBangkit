@@ -28,4 +28,20 @@ object FirestoreObject {
             const val COL_DISASTER_CASE_STATUS = "status"
         }
     }
+    internal class LangkahPertamaData{
+        companion object{
+            const val TABLE_LANGKAH_PERTAMA_DATA = "pertolonganPertamaData"
+            const val LIST_TODO = "listTodo"
+            const val DETAIL1 = "detail1"
+            const val TODO1 = "todo1"
+            const val DETAIL2 = "detail2"
+            const val TODO2 = "todo2"
+            const val DETAIL3 = "detail3"
+            const val TODO3 = "todo3"
+            const val DETAIL4 = "detail4"
+            const val TODO4 = "todo4"
+            const val DETAIL5 = "detail5"
+            const val TODO5 = "todo5"
+        }
+    }
 }

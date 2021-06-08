@@ -32,6 +32,7 @@ import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTabl
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_DISASTER_IMAGE_CASE
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_DISASTER_LATITUDE
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_DISASTER_LONGITUDE
+import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_DISASTER_TYPE
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_REPORT_BY_EMAIL
 import com.example.capstone.utils.firestore.FirestoreObject.DisasterCaseDataTable.Companion.COL_REPORT_BY_PHONE_NUMBER
 import com.example.capstone.utils.firestore.FirestoreObject.UserDataTable.Companion.PHONE_NUMBER
@@ -69,6 +70,7 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
         val IMAGE_RESULT = "IMAGE_RESULT"
         val LOCATION = "LOCATION"
         val ID_CASE = "_ID"
+        val TYPE = "TYPE"
         val LATITUDE = "LATITUDE"
         val LONGITUDE = "LONGITUDE"
     }
@@ -120,8 +122,10 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
         var extras = intent.extras
         var request = extras?.get(IMAGE_REQUEST_TYPE)
         var image = extras?.get(IMAGE_RESULT)
+        var disasterTypeText = extras?.get(TYPE)
         var location = extras?.getString(LOCATION)
         disasterLocation.text = location.toString()
+        disasterType.text = disasterTypeText.toString()
         if (request=="GALLERY"){
             imageView.setImageURI(image as Uri)
             var imageInBitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, image as Uri?)
@@ -139,6 +143,7 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
         var disasterCaseData:MutableMap<String, Any> = HashMap()
         disasterCaseData.put(COL_DISASTER_ID_CASE, extras?.get(ID_CASE).toString())
         disasterCaseData.put(COL_DISASTER_DATE_TIME, System.currentTimeMillis().toString())
+        disasterCaseData.put(COL_DISASTER_TYPE, extras?.get(TYPE).toString())
         disasterCaseData.put(COL_REPORT_BY_EMAIL, emailUser.toString())
         disasterCaseData.put(COL_DISASTER_IMAGE_CASE, "${extras?.getString(ID_CASE)}.png")
         disasterCaseData.put(COL_REPORT_BY_PHONE_NUMBER, phoneNumberUser.toString())

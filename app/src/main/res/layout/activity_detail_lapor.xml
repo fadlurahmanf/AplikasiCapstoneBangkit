@@ -1,121 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.lapor.DetailLaporActivity">
 
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/activity_detail_lapor_loadingBar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <ImageView
-        android:layout_width="350dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/activity_detail_lapor_imageDisaster"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="50dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_height="250dp"/>
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/activity_detail_lapor_linearLayout1"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/activity_detail_lapor_imageDisaster">
-
-        <TextView
-            style="@style/text_title"
-            android:layout_width="150dp"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="LOKASI" />
+            android:id="@+id/activity_detail_lapor_loadingBar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <TextView
+        <ImageView
+            android:layout_width="350dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/activity_detail_lapor_imageDisaster"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="50dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_height="250dp"/>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:id="@+id/activity_detail_lapor_disasterLocation"
-            android:gravity="center"
-            android:paddingHorizontal="50dp"
-            android:drawableStart="@drawable/ic_location_black"
-            android:text="LOKASI BENCANA"
-            android:textColor="@color/black"
-            android:background="@drawable/box_all_around_corner"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/activity_detail_lapor_linearLayout2"
-        android:layout_marginTop="30dp"
-        android:layout_marginHorizontal="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/activity_detail_lapor_linearLayout1">
-
-        <TextView
-            style="@style/text_title"
-            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="JENIS BENCANA" />
+            android:id="@+id/activity_detail_lapor_linearLayout1"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/activity_detail_lapor_imageDisaster">
 
-        <TextView
+            <TextView
+                style="@style/text_title"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="LOKASI" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/activity_detail_lapor_disasterLocation"
+                android:gravity="center"
+                android:paddingHorizontal="50dp"
+                android:drawableStart="@drawable/ic_location_black"
+                android:text="LOKASI BENCANA"
+                android:textColor="@color/black"
+                android:background="@drawable/box_all_around_corner"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:id="@+id/activity_detail_lapor_disasterType"
-            android:gravity="center"
-            android:paddingHorizontal="50dp"
-            android:text="TIPE BENCANA"
-            android:textColor="@color/black"
-            android:background="@drawable/box_all_around_corner"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/activity_detail_lapor_linearLayout3"
-        android:layout_marginTop="30dp"
-        android:layout_marginHorizontal="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/activity_detail_lapor_linearLayout2">
-
-        <TextView
-            style="@style/text_title"
-            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Detail" />
+            android:id="@+id/activity_detail_lapor_linearLayout2"
+            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/activity_detail_lapor_linearLayout1">
 
-        <EditText
+            <TextView
+                style="@style/text_title"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="JENIS BENCANA" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/activity_detail_lapor_disasterType"
+                android:gravity="center"
+                android:paddingHorizontal="50dp"
+                android:text="TIPE BENCANA"
+                android:textColor="@color/black"
+                android:background="@drawable/box_all_around_corner"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
-            android:id="@+id/activity_detail_lapor_disasterDetail"
-            android:gravity="center"
-            android:paddingHorizontal="50dp"
-            android:hint="Tulis detail disini..."
-            android:textSize="15dp"
-            android:maxLength="100"
-            android:textColor="@color/black"
-            android:background="@drawable/box_all_around_corner"
+            android:layout_height="wrap_content"
+            android:id="@+id/activity_detail_lapor_linearLayout3"
+            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/activity_detail_lapor_linearLayout2">
+
+            <TextView
+                style="@style/text_title"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Detail" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:id="@+id/activity_detail_lapor_disasterDetail"
+                android:gravity="center"
+                android:paddingHorizontal="50dp"
+                android:hint="Tulis detail disini..."
+                android:textSize="15dp"
+                android:maxLength="100"
+                android:textColor="@color/black"
+                android:background="@drawable/box_all_around_corner"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:id="@+id/activity_detail_lapor_btnSubmit"
+            android:background="@drawable/rounded_side_box"
+            app:layout_constraintTop_toBottomOf="@id/activity_detail_lapor_linearLayout3"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginVertical="30dp"
+            android:text="SUBMIT"
             android:layout_height="wrap_content"/>
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:id="@+id/activity_detail_lapor_btnSubmit"
-        android:background="@drawable/rounded_side_box"
-        app:layout_constraintTop_toBottomOf="@id/activity_detail_lapor_linearLayout3"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginVertical="30dp"
-        android:text="SUBMIT"
-        android:layout_height="wrap_content"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
