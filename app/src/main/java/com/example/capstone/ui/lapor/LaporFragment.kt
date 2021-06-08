@@ -238,7 +238,7 @@ class LaporFragment : Fragment(), View.OnClickListener {
                 btn_fromCamera.visibility = View.VISIBLE
                 btn_fromGallery.visibility = View.VISIBLE
                 var navController = findNavController()
-                navController.navigate(R.id.navigation_home)
+                navController.navigate(R.id.langkahPertama)
                 navController.navigate(R.id.navigation_lapor)
 
             }
