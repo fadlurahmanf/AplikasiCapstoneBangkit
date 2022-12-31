@@ -34,21 +34,24 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.loginactivity_btn_login->{
-                if (isAllEditTextIsNotEmpty()){
-                    var authenticationService = AuthenticationService()
-                    var result = authenticationService.SignIn(email.text.toString(), password.text.toString())
-                    result.addOnCompleteListener {
-                        println("halo")
-                        if (it.isSuccessful){
-                            val intent = Intent(this, HomePageActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        }else{
-                            var exception = it.exception as FirebaseAuthException
-                            println(exception.errorCode)
-                        }
-                    }
-                }
+                val intent = Intent(this, HomePageActivity::class.java)
+                startActivity(intent)
+                finish()
+//                if (isAllEditTextIsNotEmpty()){
+//                    var authenticationService = AuthenticationService()
+//                    var result = authenticationService.SignIn(email.text.toString(), password.text.toString())
+//                    result.addOnCompleteListener {
+//                        println("halo")
+//                        if (it.isSuccessful){
+//                            val intent = Intent(this, HomePageActivity::class.java)
+//                            startActivity(intent)
+//                            finish()
+//                        }else{
+//                            var exception = it.exception as FirebaseAuthException
+//                            println(exception.errorCode)
+//                        }
+//                    }
+//                }
             }
             R.id.loginactivity_btn_regis->{
                 val intent = Intent(this, RegisterActivity::class.java)

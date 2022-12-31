@@ -110,12 +110,13 @@ class DetailLaporActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun getUserData(){
-        val firestoreServices = FirestoreServices()
-        var getDataQuery = firestoreServices.UserData().getUserDataByEmail(emailUser)
-        getDataQuery.addOnCompleteListener {
-            var result = it.result
-            phoneNumberUser = result[PHONE_NUMBER].toString()
-        }
+//        val firestoreServices = FirestoreServices()
+//        var getDataQuery = firestoreServices.UserData().getUserDataByEmail(emailUser)
+//        getDataQuery.addOnCompleteListener {
+//            var result = it.result
+//            phoneNumberUser = result[PHONE_NUMBER].toString()
+//        }
+        phoneNumberUser = "08123456789"
     }
 
     private fun setDataFromIntent(){

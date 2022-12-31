@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "901051843948",
-    "project_id": "ancana-b21-cap0252",
-    "storage_bucket": "ancana-b21-cap0252.appspot.com"
+    "project_number": "1017968997583",
+    "project_id": "ancana-android",
+    "storage_bucket": "ancana-android.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:901051843948:android:fbef58376a1299451d5f49",
+        "mobilesdk_app_id": "1:1017968997583:android:d9a2c10da5310a2359f3ba",
         "android_client_info": {
           "package_name": "com.example.capstone"
         }
       },
       "oauth_client": [
         {
-          "client_id": "901051843948-ss7llj5bed0hshkuh75afje9oqrvm678.apps.googleusercontent.com",
+          "client_id": "1017968997583-he9lq59lr3oja20du93o2cceqf7i3tl5.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDiHE1p3ARSVwqPe3H_QKAXKfmPZL3f0UQ"
+          "current_key": "AIzaSyBjLQX-O0ZBbz7BcynCdVvU52tRpULplao"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "901051843948-ss7llj5bed0hshkuh75afje9oqrvm678.apps.googleusercontent.com",
+              "client_id": "1017968997583-he9lq59lr3oja20du93o2cceqf7i3tl5.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
